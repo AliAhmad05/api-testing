@@ -1,8 +1,9 @@
 /// <reference types="cypress" />
 
-describe('Backend Testing',()=>{
+describe('Backend Testing', () => {
 
-    beforeEach('Login to App',()=>{
+    beforeEach('Login to App', () => {
+        cy.intercept('GET', 'https://api.realworld.io/api/tags', { fixtures: 'tags.json' })
         cy.loginToApplication()
     })
 
@@ -10,9 +11,9 @@ describe('Backend Testing',()=>{
     //     cy.log('We logged in Finally!!')
     // })
 
-    it.only('Verify correct request and response',()=>{
+    it('Verify correct request and response', () => {
 
-        cy.intercept('POST','https://api.realworld.io/api/articles/').as('PostArticles')
+        cy.intercept('POST', 'https://api.realworld.io/api/articles/').as('PostArticles')
 
 
         cy.contains(' New Article ').click()
@@ -23,7 +24,7 @@ describe('Backend Testing',()=>{
         //cy.get('[type="button"]').click()
         cy.contains(' Publish Article ').click()
 
-        cy.wait('@PostArticles').then( xhr => {
+        cy.wait('@PostArticles').then(xhr => {
             console.log(xhr)
             expect(xhr.response.statusCode).to.equal(200)
             expect(xhr.request.body.article.body).to.equal('This is the article')
@@ -31,5 +32,9 @@ describe('Backend Testing',()=>{
         })
 
 
+    })
+
+    it.only('Verify tags on the dashboard', () => {
+        cy.log('We are logged in')
     })
 })
