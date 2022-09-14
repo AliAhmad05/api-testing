@@ -1,0 +1,19 @@
+{
+  "article": {
+    "slug": "This-is-the-title-98537",
+    "title": "This is the title",
+    "description": "This is the description",
+    "body": "This is the article",
+    "tagList": [],
+    "createdAt": "2022-09-12T11:24:22.340Z",
+    "updatedAt": "2022-09-12T11:24:22.340Z",
+    "favorited": true,
+    "favoritesCount": 1,
+    "author": {
+      "username": "Ali Ahmad",
+      "bio": null,
+      "image": "https://api.realworld.io/images/smiley-cyrus.jpeg",
+      "following": false
+    }
+  }
+}

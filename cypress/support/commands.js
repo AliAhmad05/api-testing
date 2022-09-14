@@ -36,9 +36,29 @@
 //   }
 // }
 Cypress.Commands.add('loginToApplication', ()=>{
-    cy.visit('/login')
-    cy.get('[placeholder="Email"]').type('aliaurangzaib05@gmail.com')
-    cy.get('[placeholder="Password"]').type('05jan1997')
-    //cy.get('form').submit()
-    cy.get('[type="submit"]').click()
+
+
+    const UserCredentials = {
+        "user": {
+            "email": "aliaurangzaib05@gmail.com",
+            "password": "05jan1997"
+        }
+    }
+
+    cy.request('POST','https://conduit.productionready.io/api/users/login',UserCredentials)
+        .its('body').then(body=>{
+            const token = body.user.token
+            cy.wrap(token).as('token')
+            cy.visit('/',{
+                onBeforeLoad(win){
+                    win.localStorage.setItem('jwtToken',token)
+                }
+            })
+        })
+
+    // cy.visit('/login')
+    // cy.get('[placeholder="Email"]').type('aliaurangzaib05@gmail.com')
+    // cy.get('[placeholder="Password"]').type('05jan1997')
+    // //cy.get('form').submit()
+    // cy.get('[type="submit"]').click()
 })
